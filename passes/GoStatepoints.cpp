@@ -1514,8 +1514,8 @@ makeStatepointExplicitImpl(CallBase *Call, /* to replace */
     FunctionCallee FCallTarget(Call->getFunctionType(),
                               Call->getCalledOperand());
     InvokeInst *Invoke = Builder.CreateGCStatepointInvoke(
-        StatepointID, NumPatchBytes, FCallTarget, ToReplace->getNormalDest(),
-        ToReplace->getUnwindDest(), CallArgs, GCArgs, ArrayRef<Value*>(),
+        StatepointID, NumPatchBytes, FCallTarget.getCallee(), ToReplace->getNormalDest(),
+        ToReplace->getUnwindDest(), CallArgs, Optional<ArrayRef<Value *>>(GCArgs), ArrayRef<Value*>(),
         "statepoint_token");
 
     Invoke->setCallingConv(ToReplace->getCallingConv());
